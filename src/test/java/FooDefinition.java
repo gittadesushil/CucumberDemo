@@ -19,6 +19,7 @@ public class FooDefinition {
     @When("I perform some action")
     public void iPerformSomeAction() {
         //code here
+        Assert.fail();
     }
 
     @Then("I should some result")
@@ -28,7 +29,7 @@ public class FooDefinition {
 
     @Given("there are {int} cucumbers")
     public void thereAreStartCucumbers(int i0) {
-        assertEquals(i0,0);
+       // assertEquals(i0,0);
         System.out.println(i0);
     }
 
