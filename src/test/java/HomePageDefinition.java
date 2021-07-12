@@ -49,6 +49,7 @@ public class HomePageDefinition {
         }
         Assert.assertNull("Error message is not available on the page", errorText);
 
+        //Thread sleep is not recommended in automation script. DO NOT USE THIS!
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
