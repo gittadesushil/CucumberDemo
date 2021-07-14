@@ -70,9 +70,9 @@ public class HomePageDefinition {
         //fluent wait
         FluentWait wait = new FluentWait(driver);
 
-        wait.withTimeout(Duration.ofSeconds(2));
-        wait.pollingEvery(Duration.ofMillis(100));
-        wait.ignoring(java.util.NoSuchElementException.class);
+        wait.withTimeout(Duration.ofSeconds(200));
+        wait.pollingEvery(Duration.ofMillis(2));
+        wait.ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("res_title")));
 
         String hotelName = driver.findElement(By.className("res_title")).getText();
