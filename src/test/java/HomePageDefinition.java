@@ -8,15 +8,26 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HomePageDefinition {
     //Create a web driver
     WebDriver driver = new ChromeDriver();
 
+    public HomePageDefinition(){
+
+    }
+
     @Given("Website is up and running")
     public void websiteIsUpAndRunning() {
+
         driver.get("https://foodstore-1.web.app/");
         String actual = driver.findElement(By.className("coverTitle")).getText();
         Assert.assertEquals("Reading the text from homepage", "You order we deliver",actual);
@@ -49,13 +60,21 @@ public class HomePageDefinition {
         }
         Assert.assertNull("Error message is not available on the page", errorText);
 
-        //Thread sleep is not recommended in automation script. DO NOT USE THIS!
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         //Verifying the actual hotel name
+
+        //Explicit wait (wait for 2 sec but every 200 millSec of interval. If condition is satisfied before 2 sec then
+        //return immediately
+//        WebDriverWait wait = new WebDriverWait(driver, 2,200);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("res_title")));
+
+        //fluent wait
+        FluentWait wait = new FluentWait(driver);
+
+        wait.withTimeout(Duration.ofSeconds(2));
+        wait.pollingEvery(Duration.ofMillis(100));
+        wait.ignoring(java.util.NoSuchElementException.class);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("res_title")));
+
         String hotelName = driver.findElement(By.className("res_title")).getText();
         Assert.assertEquals("Prithvi Cafe",hotelName);
     }
