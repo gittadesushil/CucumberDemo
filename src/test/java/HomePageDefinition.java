@@ -3,11 +3,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -70,12 +69,19 @@ public class HomePageDefinition {
         //fluent wait
         FluentWait wait = new FluentWait(driver);
 
-        wait.withTimeout(Duration.ofSeconds(200));
-        wait.pollingEvery(Duration.ofMillis(2));
-        wait.ignoring(NoSuchElementException.class);
+        wait.withTimeout(Duration.ofSeconds(30));
+        wait.pollingEvery(Duration.ofMillis(2));//frequency
+        wait.ignoring(org.openqa.selenium.NoSuchElementException.class);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("res_title")));
 
         String hotelName = driver.findElement(By.className("res_title")).getText();
         Assert.assertEquals("Prithvi Cafe",hotelName);
+    }
+
+    @When("User press keyboard ENTER key")
+    public void userPressKeyboardENTERKey() {
+        Actions actionProvider = new Actions(driver);
+        Action enter = actionProvider.sendKeys(Keys.ENTER).build();
+        enter.perform();
     }
 }
