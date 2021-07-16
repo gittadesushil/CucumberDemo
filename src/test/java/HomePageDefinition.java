@@ -2,6 +2,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,16 +13,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import Utility.*;
+
 
 public class HomePageDefinition {
     //Create a web driver
-    WebDriver driver = new ChromeDriver();
+      WebDriver driver = null;
 
     public HomePageDefinition(){
-
+        driver = BrowserDriver.GetDriver();
     }
 
     @Given("Website is up and running")
@@ -30,6 +34,13 @@ public class HomePageDefinition {
         driver.get("https://foodstore-1.web.app/");
         String actual = driver.findElement(By.className("coverTitle")).getText();
         Assert.assertEquals("Reading the text from homepage", "You order we deliver",actual);
+
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try{
+            FileUtils.copyFile(scrFile, new File("ScreenShots/src/test/java/newimage.png"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @And("Search functionality is implemented")
