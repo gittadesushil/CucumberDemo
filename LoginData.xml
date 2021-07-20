@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LoginData>
+    <combi1>
+        <email>abc@foodstore.com</email>
+        <password>123456</password>
+        <message></message>
+    </combi1>
+    <combi2>
+        <email>pqr@foodstore.com</email>
+        <password>8787878</password>
+    </combi2>
+    <combi3>
+        <email></email>
+        <password>8787878</password>
+    </combi3>
+    <combi4>
+        <email>pqr@foodstore.com</email>
+        <password></password>
+    </combi4>
+    <combi5>
+        <email></email>
+        <password></password>
+        <message>auth/invalid-email</message>
+    </combi5>
+</LoginData>
